@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- 指定包或类的日志级别 -->
+    <logger name="com.laowen" level="info"/>
+
+    <!--定义输出路径-->
+    <property name="log.dir" value="/opt/logs/x2018"/>
+    <property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{80}[%L] - %msg%n"/>
+
+    <!--控制台输出-->
+    <appender name="console-appender" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${pattern}</pattern>
+        </layout>
+    </appender>
+
+    <!-- info文件日志 -->
+    <appender name="file-info-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/info/xx-info.log</file>
+        <Prudent>true</Prudent>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>info</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.dir}/info/xx-info-%d{yyyy-MM-dd'.log'}</FileNamePattern>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${pattern}</Pattern>
+        </layout>
+    </appender>
+
+    <!-- error文件日志 -->
+    <appender name="file-error-appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.dir}/error/xx-error.log</file>
+        <Prudent>true</Prudent>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>error</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${log.dir}/error/xx-error-%d{yyyy-MM-dd'.log'}</FileNamePattern>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>${pattern}</Pattern>
+        </layout>
+    </appender>
+
+    <!-- 指定日志级别 -->
+    <root level="warn">
+        <appender-ref ref="console-appender"/>
+        <appender-ref ref="file-info-appender"/>
+        <appender-ref ref="file-error-appender"/>
+    </root>
+
+</configuration>
