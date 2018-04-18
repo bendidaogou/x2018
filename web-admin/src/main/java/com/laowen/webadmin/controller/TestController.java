@@ -5,13 +5,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/test")
 public class TestController {
 
     @Value("${test-piror}")
     private String testPiror;
 
     //测试config下的配置会覆盖resources下面的
-    @RequestMapping("/test/index")
+    @RequestMapping("/index")
     public String index() {
         return testPiror;
     }
