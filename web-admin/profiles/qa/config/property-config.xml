@@ -8,8 +8,10 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:config/application.properties</value>
-                <value>classpath:config/common.properties</value>
+                <!-- config在后,保证复盖同名属性值 -->
+                <value>classpath*:application.properties</value>
+                <value>classpath*:config/application.properties</value>
+                <value>classpath*:config/common.properties</value>
             </list>
         </property>
         <property name="fileEncoding" value="utf-8"/>

@@ -68,9 +68,8 @@
         <dependency>
             <groupId>com.laowen</groupId>
             <artifactId>x2018-auth</artifactId>
-            <version>${pom.parent.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
-
 
     </dependencies>
 

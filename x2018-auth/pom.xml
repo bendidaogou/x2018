@@ -37,6 +37,46 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!-- x2018-common -->
+        <dependency>
+            <groupId>com.laowen</groupId>
+            <artifactId>x2018-common</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <build.profile.id>dev</build.profile.id>
+            </properties>
+        </profile>
+        <profile>
+            <id>qa</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <build.profile.id>qa</build.profile.id>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>x2018-auth</finalName>
+        <resources>
+            <resource>
+                <directory>${basedir}/profiles/${build.profile.id}/</directory>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/resources/</directory>
+            </resource>
+        </resources>
+    </build>
 
 </project>
