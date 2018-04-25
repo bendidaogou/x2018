@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laowen.auth.dao.SysAreaMapper">
+    <resultMap id="BaseResultMap" type="com.laowen.auth.domain.SysArea">
+        <id column="area_id" jdbcType="INTEGER" property="areaId"/>
+        <result column="area_name" jdbcType="VARCHAR" property="areaName"/>
+        <result column="area_pid" jdbcType="INTEGER" property="areaPid"/>
+        <result column="area_seq" jdbcType="INTEGER" property="areaSeq"/>
+        <result column="area_level" jdbcType="INTEGER" property="areaLevel"/>
+        <result column="area_status" jdbcType="INTEGER" property="areaStatus"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    area_id, area_name, area_pid, area_seq, area_level, area_status, create_time, create_user, 
+    update_time, update_user
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_area
+        where area_id = #{areaId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_area
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.laowen.auth.domain.SysArea">
+    insert into sys_area (area_id, area_name, area_pid, 
+      area_seq, area_level, area_status, 
+      create_time, create_user, update_time, 
+      update_user)
+    values (#{areaId,jdbcType=INTEGER}, #{areaName,jdbcType=VARCHAR}, #{areaPid,jdbcType=INTEGER}, 
+      #{areaSeq,jdbcType=INTEGER}, #{areaLevel,jdbcType=INTEGER}, #{areaStatus,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.laowen.auth.domain.SysArea">
+        insert into sys_area
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="areaId != null">
+                area_id,
+            </if>
+            <if test="areaName != null">
+                area_name,
+            </if>
+            <if test="areaPid != null">
+                area_pid,
+            </if>
+            <if test="areaSeq != null">
+                area_seq,
+            </if>
+            <if test="areaLevel != null">
+                area_level,
+            </if>
+            <if test="areaStatus != null">
+                area_status,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="areaId != null">
+                #{areaId,jdbcType=INTEGER},
+            </if>
+            <if test="areaName != null">
+                #{areaName,jdbcType=VARCHAR},
+            </if>
+            <if test="areaPid != null">
+                #{areaPid,jdbcType=INTEGER},
+            </if>
+            <if test="areaSeq != null">
+                #{areaSeq,jdbcType=INTEGER},
+            </if>
+            <if test="areaLevel != null">
+                #{areaLevel,jdbcType=INTEGER},
+            </if>
+            <if test="areaStatus != null">
+                #{areaStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.laowen.auth.domain.SysArea">
+        update sys_area
+        <set>
+            <if test="areaName != null">
+                area_name = #{areaName,jdbcType=VARCHAR},
+            </if>
+            <if test="areaPid != null">
+                area_pid = #{areaPid,jdbcType=INTEGER},
+            </if>
+            <if test="areaSeq != null">
+                area_seq = #{areaSeq,jdbcType=INTEGER},
+            </if>
+            <if test="areaLevel != null">
+                area_level = #{areaLevel,jdbcType=INTEGER},
+            </if>
+            <if test="areaStatus != null">
+                area_status = #{areaStatus,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where area_id = #{areaId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.laowen.auth.domain.SysArea">
+    update sys_area
+    set area_name = #{areaName,jdbcType=VARCHAR},
+      area_pid = #{areaPid,jdbcType=INTEGER},
+      area_seq = #{areaSeq,jdbcType=INTEGER},
+      area_level = #{areaLevel,jdbcType=INTEGER},
+      area_status = #{areaStatus,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR}
+    where area_id = #{areaId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -8,19 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-    @Value("${test-piror}")
-    private String testPiror;
-
-    @Value("${test-piror2}")
-    private String testPiror2;
-
-    @Value("${test-piror3}")
-    private String testPiror3;
-
     //测试config下的配置会覆盖resources下面的
     @RequestMapping("/index")
     public String index() {
-        return testPiror;
+        return "";
     }
 
 }

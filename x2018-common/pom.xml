@@ -12,8 +12,13 @@
     <artifactId>x2018-common</artifactId>
 
     <name>x2018-common</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+
+    <developers>
+        <developer>
+            <name>wenshiwei</name>
+            <email>309685769@qq.com</email>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

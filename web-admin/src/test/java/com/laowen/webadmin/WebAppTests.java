@@ -1,6 +1,6 @@
 package com.laowen.webadmin;
 
-import com.laowen.auth.TestApp;
+import com.laowen.auth.service.SysUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +11,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class WebAppTests {
 
+//    @Autowired
+//    private SysUserMapper sysUserMapper;
+
     @Autowired
-    private TestApp testApp;
+    private SysUserService sysUserService;
 
     @Test
-    public void contextLoads() {
-        testApp.fn();
+    public void test01() {
+        int rev = sysUserService.insert(null);
+        System.out.println("--------");
+        System.out.println(rev);
+
 
     }
 

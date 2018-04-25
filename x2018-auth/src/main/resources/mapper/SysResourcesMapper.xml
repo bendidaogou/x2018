@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laowen.auth.dao.SysResourcesMapper">
+    <resultMap id="BaseResultMap" type="com.laowen.auth.domain.SysResources">
+        <id column="resources_id" jdbcType="VARCHAR" property="resourcesId"/>
+        <result column="resources_name" jdbcType="VARCHAR" property="resourcesName"/>
+        <result column="resources_pid" jdbcType="VARCHAR" property="resourcesPid"/>
+        <result column="resources_type" jdbcType="INTEGER" property="resourcesType"/>
+        <result column="resources_seq" jdbcType="INTEGER" property="resourcesSeq"/>
+        <result column="resources_url" jdbcType="VARCHAR" property="resourcesUrl"/>
+        <result column="resources_code" jdbcType="VARCHAR" property="resourcesCode"/>
+        <result column="resources_icon" jdbcType="VARCHAR" property="resourcesIcon"/>
+        <result column="resources_status" jdbcType="INTEGER" property="resourcesStatus"/>
+        <result column="resources_note" jdbcType="VARCHAR" property="resourcesNote"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    resources_id, resources_name, resources_pid, resources_type, resources_seq, resources_url, 
+    resources_code, resources_icon, resources_status, resources_note, create_time, create_user, 
+    update_time, update_user
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resources
+        where resources_id = #{resourcesId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_resources
+    where resources_id = #{resourcesId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.laowen.auth.domain.SysResources">
+    insert into sys_resources (resources_id, resources_name, resources_pid, 
+      resources_type, resources_seq, resources_url, 
+      resources_code, resources_icon, resources_status, 
+      resources_note, create_time, create_user, 
+      update_time, update_user)
+    values (#{resourcesId,jdbcType=VARCHAR}, #{resourcesName,jdbcType=VARCHAR}, #{resourcesPid,jdbcType=VARCHAR}, 
+      #{resourcesType,jdbcType=INTEGER}, #{resourcesSeq,jdbcType=INTEGER}, #{resourcesUrl,jdbcType=VARCHAR}, 
+      #{resourcesCode,jdbcType=VARCHAR}, #{resourcesIcon,jdbcType=VARCHAR}, #{resourcesStatus,jdbcType=INTEGER}, 
+      #{resourcesNote,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.laowen.auth.domain.SysResources">
+        insert into sys_resources
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="resourcesId != null">
+                resources_id,
+            </if>
+            <if test="resourcesName != null">
+                resources_name,
+            </if>
+            <if test="resourcesPid != null">
+                resources_pid,
+            </if>
+            <if test="resourcesType != null">
+                resources_type,
+            </if>
+            <if test="resourcesSeq != null">
+                resources_seq,
+            </if>
+            <if test="resourcesUrl != null">
+                resources_url,
+            </if>
+            <if test="resourcesCode != null">
+                resources_code,
+            </if>
+            <if test="resourcesIcon != null">
+                resources_icon,
+            </if>
+            <if test="resourcesStatus != null">
+                resources_status,
+            </if>
+            <if test="resourcesNote != null">
+                resources_note,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="resourcesId != null">
+                #{resourcesId,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesName != null">
+                #{resourcesName,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesPid != null">
+                #{resourcesPid,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesType != null">
+                #{resourcesType,jdbcType=INTEGER},
+            </if>
+            <if test="resourcesSeq != null">
+                #{resourcesSeq,jdbcType=INTEGER},
+            </if>
+            <if test="resourcesUrl != null">
+                #{resourcesUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesCode != null">
+                #{resourcesCode,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesIcon != null">
+                #{resourcesIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesStatus != null">
+                #{resourcesStatus,jdbcType=INTEGER},
+            </if>
+            <if test="resourcesNote != null">
+                #{resourcesNote,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.laowen.auth.domain.SysResources">
+        update sys_resources
+        <set>
+            <if test="resourcesName != null">
+                resources_name = #{resourcesName,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesPid != null">
+                resources_pid = #{resourcesPid,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesType != null">
+                resources_type = #{resourcesType,jdbcType=INTEGER},
+            </if>
+            <if test="resourcesSeq != null">
+                resources_seq = #{resourcesSeq,jdbcType=INTEGER},
+            </if>
+            <if test="resourcesUrl != null">
+                resources_url = #{resourcesUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesCode != null">
+                resources_code = #{resourcesCode,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesIcon != null">
+                resources_icon = #{resourcesIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesStatus != null">
+                resources_status = #{resourcesStatus,jdbcType=INTEGER},
+            </if>
+            <if test="resourcesNote != null">
+                resources_note = #{resourcesNote,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where resources_id = #{resourcesId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.laowen.auth.domain.SysResources">
+    update sys_resources
+    set resources_name = #{resourcesName,jdbcType=VARCHAR},
+      resources_pid = #{resourcesPid,jdbcType=VARCHAR},
+      resources_type = #{resourcesType,jdbcType=INTEGER},
+      resources_seq = #{resourcesSeq,jdbcType=INTEGER},
+      resources_url = #{resourcesUrl,jdbcType=VARCHAR},
+      resources_code = #{resourcesCode,jdbcType=VARCHAR},
+      resources_icon = #{resourcesIcon,jdbcType=VARCHAR},
+      resources_status = #{resourcesStatus,jdbcType=INTEGER},
+      resources_note = #{resourcesNote,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR}
+    where resources_id = #{resourcesId,jdbcType=VARCHAR}
+  </update>
+</mapper>

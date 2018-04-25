@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.laowen.auth.dao.RefRoleResourcesMapper">
+    <resultMap id="BaseResultMap" type="com.laowen.auth.domain.RefRoleResources">
+        <id column="ref_id" jdbcType="VARCHAR" property="refId"/>
+        <result column="role_id" jdbcType="VARCHAR" property="roleId"/>
+        <result column="resources_id" jdbcType="VARCHAR" property="resourcesId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_user" jdbcType="VARCHAR" property="createUser"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    ref_id, role_id, resources_id, create_time, create_user
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from ref_role_resources
+        where ref_id = #{refId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ref_role_resources
+    where ref_id = #{refId,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.laowen.auth.domain.RefRoleResources">
+    insert into ref_role_resources (ref_id, role_id, resources_id, 
+      create_time, create_user)
+    values (#{refId,jdbcType=VARCHAR}, #{roleId,jdbcType=VARCHAR}, #{resourcesId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.laowen.auth.domain.RefRoleResources">
+        insert into ref_role_resources
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="refId != null">
+                ref_id,
+            </if>
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="resourcesId != null">
+                resources_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="refId != null">
+                #{refId,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null">
+                #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesId != null">
+                #{resourcesId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.laowen.auth.domain.RefRoleResources">
+        update ref_role_resources
+        <set>
+            <if test="roleId != null">
+                role_id = #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="resourcesId != null">
+                resources_id = #{resourcesId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where ref_id = #{refId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.laowen.auth.domain.RefRoleResources">
+    update ref_role_resources
+    set role_id = #{roleId,jdbcType=VARCHAR},
+      resources_id = #{resourcesId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR}
+    where ref_id = #{refId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -3,6 +3,9 @@
 
     <!-- 指定包或类的日志级别 -->
     <logger name="com.laowen" level="trace"/>
+    <logger name="org.mybatis.spring.SqlSessionUtils" level="debug" />
+    <logger name="org.springframework.jdbc.datasource.DataSourceTransactionManager" level="debug" />
+    <logger name="org.springframework.jdbc.datasource.DataSourceUtils" level="debug" />
 
     <!--定义输出路径-->
     <property name="log.dir" value="/opt/logs/x2018"/>
