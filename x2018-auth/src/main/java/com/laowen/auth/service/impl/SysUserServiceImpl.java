@@ -15,10 +15,6 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     private SysUserMapper sysUserMapper;
-    @Value("${test_key}")
-    private String testKey1;
-    @Value("${test_key2}")
-    private String testKey2;
 
     @Override
     @Transactional(rollbackFor = Exception.class)

@@ -3,7 +3,7 @@ package com.laowen.auth.dao;
 import com.laowen.auth.domain.SysUser;
 import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
+//@Mapper
 public interface SysUserMapper {
 
     /**
