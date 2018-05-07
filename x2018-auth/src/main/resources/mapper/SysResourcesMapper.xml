@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.laowen.auth.dao.SysResourcesMapper">
+
     <resultMap id="BaseResultMap" type="com.laowen.auth.domain.SysResources">
         <id column="resources_id" jdbcType="VARCHAR" property="resourcesId"/>
         <result column="resources_name" jdbcType="VARCHAR" property="resourcesName"/>
@@ -17,34 +18,44 @@
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="update_user" jdbcType="VARCHAR" property="updateUser"/>
     </resultMap>
+
     <sql id="Base_Column_List">
     resources_id, resources_name, resources_pid, resources_type, resources_seq, resources_url, 
     resources_code, resources_icon, resources_status, resources_note, create_time, create_user, 
     update_time, update_user
   </sql>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+    <!-- 根据id查询 -->
+    <select id="selectById" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_resources
         where resources_id = #{resourcesId,jdbcType=VARCHAR}
     </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-    delete from sys_resources
-    where resources_id = #{resourcesId,jdbcType=VARCHAR}
-  </delete>
-    <insert id="insert" parameterType="com.laowen.auth.domain.SysResources">
-    insert into sys_resources (resources_id, resources_name, resources_pid, 
-      resources_type, resources_seq, resources_url, 
-      resources_code, resources_icon, resources_status, 
-      resources_note, create_time, create_user, 
-      update_time, update_user)
-    values (#{resourcesId,jdbcType=VARCHAR}, #{resourcesName,jdbcType=VARCHAR}, #{resourcesPid,jdbcType=VARCHAR}, 
-      #{resourcesType,jdbcType=INTEGER}, #{resourcesSeq,jdbcType=INTEGER}, #{resourcesUrl,jdbcType=VARCHAR}, 
-      #{resourcesCode,jdbcType=VARCHAR}, #{resourcesIcon,jdbcType=VARCHAR}, #{resourcesStatus,jdbcType=INTEGER}, 
-      #{resourcesNote,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR})
-  </insert>
-    <insert id="insertSelective" parameterType="com.laowen.auth.domain.SysResources">
+
+    <!-- 根据id查询 -->
+    <select id="selectList" parameterType="com.laowen.auth.domain.SysResources" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resources
+        <where>
+            resources_status = 0
+            <if test="resourcesName != null">
+                <bind name="pattern" value="'%'+_parameter.resourcesName+'%'"/>
+                and resources_name like #{pattern,jdbcType=VARCHAR}
+            </if>
+            <if test="resourcesType != null">
+                and resources_type = #{resourcesType,jdbcType=INTEGER}
+            </if>
+            <if test="resourcesCode != null">
+                <bind name="pattern" value="'%'+_parameter.resourcesCode+'%'"/>
+                and resources_code like #{pattern,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <!-- 添加 -->
+    <insert id="insertOne" parameterType="com.laowen.auth.domain.SysResources">
         insert into sys_resources
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="resourcesId != null">
@@ -135,7 +146,9 @@
             </if>
         </trim>
     </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="com.laowen.auth.domain.SysResources">
+
+    <!-- 更新 -->
+    <update id="updateById" parameterType="com.laowen.auth.domain.SysResources">
         update sys_resources
         <set>
             <if test="resourcesName != null">
@@ -180,21 +193,5 @@
         </set>
         where resources_id = #{resourcesId,jdbcType=VARCHAR}
     </update>
-    <update id="updateByPrimaryKey" parameterType="com.laowen.auth.domain.SysResources">
-    update sys_resources
-    set resources_name = #{resourcesName,jdbcType=VARCHAR},
-      resources_pid = #{resourcesPid,jdbcType=VARCHAR},
-      resources_type = #{resourcesType,jdbcType=INTEGER},
-      resources_seq = #{resourcesSeq,jdbcType=INTEGER},
-      resources_url = #{resourcesUrl,jdbcType=VARCHAR},
-      resources_code = #{resourcesCode,jdbcType=VARCHAR},
-      resources_icon = #{resourcesIcon,jdbcType=VARCHAR},
-      resources_status = #{resourcesStatus,jdbcType=INTEGER},
-      resources_note = #{resourcesNote,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      create_user = #{createUser,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-      update_user = #{updateUser,jdbcType=VARCHAR}
-    where resources_id = #{resourcesId,jdbcType=VARCHAR}
-  </update>
+
 </mapper>

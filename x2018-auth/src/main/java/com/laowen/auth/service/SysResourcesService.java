@@ -1,13 +1,10 @@
-package com.laowen.auth.dao;
+package com.laowen.auth.service;
 
 import com.laowen.auth.domain.SysResources;
 
 import java.util.List;
 
-/**
- * 系统资源操作
- */
-public interface SysResourcesMapper {
+public interface SysResourcesService {
 
     /**
      * 添加
@@ -39,5 +36,13 @@ public interface SysResourcesMapper {
      * @return
      */
     int updateById(SysResources sysResources);
+
+    /**
+     * 根据id删除
+     *
+     * @param resourcesId
+     * @return
+     */
+    int deleteById(String resourcesId);
 
 }
