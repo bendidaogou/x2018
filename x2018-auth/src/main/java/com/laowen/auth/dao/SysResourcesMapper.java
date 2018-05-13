@@ -1,12 +1,14 @@
 package com.laowen.auth.dao;
 
 import com.laowen.auth.domain.SysResources;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 /**
  * 系统资源操作
  */
+@Repository
 public interface SysResourcesMapper {
 
     /**
@@ -26,11 +28,19 @@ public interface SysResourcesMapper {
     SysResources selectById(String resourcesId);
 
     /**
-     * 查询列表
+     * 查询菜单list
      *
      * @return
      */
-    List<SysResources> selectList(SysResources sysResources);
+    List<SysResources> selectMenuList();
+
+    /**
+     * 查询菜单权限list
+     *
+     * @param menuId
+     * @return
+     */
+    List<SysResources> selectPermList(String menuId);
 
     /**
      * 更新

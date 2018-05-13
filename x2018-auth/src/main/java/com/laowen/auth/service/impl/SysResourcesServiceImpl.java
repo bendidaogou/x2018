@@ -31,8 +31,13 @@ public class SysResourcesServiceImpl implements SysResourcesService {
     }
 
     @Override
-    public List<SysResources> selectList(SysResources sysResources) {
-        return sysResourcesMapper.selectList(sysResources);
+    public List<SysResources> selectMenuList() {
+        return sysResourcesMapper.selectMenuList();
+    }
+
+    @Override
+    public List<SysResources> selectPermList(String menuId) {
+        return sysResourcesMapper.selectPermList(menuId);
     }
 
     @Override

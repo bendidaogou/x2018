@@ -33,25 +33,29 @@
         where resources_id = #{resourcesId,jdbcType=VARCHAR}
     </select>
 
-    <!-- 根据id查询 -->
-    <select id="selectList" parameterType="com.laowen.auth.domain.SysResources" resultMap="BaseResultMap">
+    <!-- 查询菜单list -->
+    <select id="selectMenuList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from sys_resources
         <where>
             resources_status = 0
-            <if test="resourcesName != null">
-                <bind name="pattern" value="'%'+_parameter.resourcesName+'%'"/>
-                and resources_name like #{pattern,jdbcType=VARCHAR}
-            </if>
-            <if test="resourcesType != null">
-                and resources_type = #{resourcesType,jdbcType=INTEGER}
-            </if>
-            <if test="resourcesCode != null">
-                <bind name="pattern" value="'%'+_parameter.resourcesCode+'%'"/>
-                and resources_code like #{pattern,jdbcType=VARCHAR}
-            </if>
+            and resources_type=0
         </where>
+        order by resources_seq asc
+    </select>
+
+    <!-- 查询菜单权限list -->
+    <select id="selectPermList" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_resources
+        <where>
+            resources_status = 0
+            and resources_type=1
+            and resources_pid = #{resourcesPid}
+        </where>
+        order by resources_seq asc
     </select>
 
     <!-- 添加 -->

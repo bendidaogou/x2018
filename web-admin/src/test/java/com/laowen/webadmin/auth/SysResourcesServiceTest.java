@@ -19,9 +19,7 @@ public class SysResourcesServiceTest {
 
     @Test
     public void test01() {
-        List<SysResources> list = sysResourcesService.selectList(new SysResources() {{
-            setResourcesName("角色");
-        }});
+        List<SysResources> list = sysResourcesService.selectMenuList();
         System.out.println(list);
     }
 

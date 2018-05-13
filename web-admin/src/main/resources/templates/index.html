@@ -410,8 +410,6 @@
 
     <!-- Main content -->
     <section class="content">
-
-
       <div id="frame" class="row"></div>
     </section>
     <!-- /.content -->
@@ -486,7 +484,6 @@
     $(document).ready(function () {
         $('.sidebar-menu').tree();
         $('a[url]').click(function () {
-            console.log($(this).attr('url'));
             $('#frame').load($(this).attr('url'));
         });
     });
