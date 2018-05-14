@@ -4,7 +4,7 @@ public enum ResourcesTypeEnum {
 
     MENU(0, "菜单")
     , PERMISSIONS(1, "功能")
-
+    , FOLDER(2, "文件夹")
     ;
 
     private Integer val;

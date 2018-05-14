@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" type="text/css" href="/libs/zTree/css/zTreeStyle/zTreeStyle.css">
 <script src="/libs/zTree/js/jquery.ztree.core.js"></script>
 
@@ -23,20 +22,31 @@
     <!--</div>-->
 <!--</div>-->
 
-<div  class="col-sm-3">
-    <button id="button" class="btn btn-default">
-        <span class="glyphicon glyphicon-search" aria-hidden="true">查询</span>
-    </button>
+<div class="col-sm-3">
+    <style type="text/css">
+        .ztree li * {
+            font-size: 14px;
+            margin: 5px;
+        }
+    </style>
+
     <ul id="zTree" class="ztree"></ul>
 </div>
 
-<div  class="col-sm-9">
+<div class="col-sm-9">
+    <div id="toolbar">
+
+        <button id="btnPlus" class="btn btn-default" onclick="add()">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true">新增</span>
+        </button>
+        <button id="btnPencil" class="btn btn-default">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true">修改</span>
+        </button>
+        <button id="btnRemove" class="btn btn-default">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true">删除</span>
+        </button>
+    </div>
     <table id="table"></table>
-</div>
-<div id="toolbar">
-    <button id="button" class="btn btn-default">
-        <span class="glyphicon glyphicon-search" aria-hidden="true">查询</span>
-    </button>
 </div>
 
 <script>
@@ -48,7 +58,7 @@
             }
         },
         callback: {
-            onClick:zTreeOnClick
+            onClick: zTreeOnClick
         }
     };
 
@@ -58,55 +68,78 @@
             $.each(rev.rows, function (i, v) {
                 zNodes.push({id: v.resourcesId, pId: v.resourcesPid, name: v.resourcesName, type: v.resourcesType})
             });
-            $.fn.zTree.init($("#zTree"), setting, zNodes);
+            $.fn.zTree.init($("#zTree"), setting, zNodes).expandAll(true);
+
+            initTable("-1");
+
         }, 'json');
     });
 
+    //zTree点击事件
     function zTreeOnClick(event, treeId, treeNode) {
-        console.log(treeNode);
-        initTable(treeNode.id);
+        if (0 == treeNode.type) {
+            initTable(treeNode.id);
+        } else {
+            $('#table').bootstrapTable('uncheckAll').bootstrapTable("removeAll");
+            console.log('----所选非菜单……')
+        }
     }
 
+    //初始化表格
     function initTable(menuId) {
-        $('#table').bootstrapTable('destroy');
-        $('#table').bootstrapTable({
-            url: '/sys/resources/perm/list?menuId='+menuId,
-            method: 'get',
-            toolbar: '#toolbar',
-            striped: true,
-            cache: false,
-            //pagination: false,
-            //queryParams: queryParams,
-            sidePagination: "server",
-            // pageNumber: 1,
-            // pageSize: 10,
-            // pageList: [10, 20, 50, 100],
-            // showColumns: true,
-            // showRefresh: true,
-            // clickToSelect: true,
-            columns: [
-                {
-                    field: 'resourcesName',
-                    title: '资源名'
+        $('#table').bootstrapTable('destroy')
+            .bootstrapTable({
+                url: '/sys/resources/perm/list?menuId=' + menuId,
+                method: 'get',
+                toolbar: '#toolbar',
+                striped: true,
+                cache: false,
+                pagination: false,
+                queryParams: queryParams,
+                sidePagination: "server",
+                // pageNumber: 1,
+                // pageSize: 10,
+                // pageList: [10, 20, 50, 100],
+                showColumns: true,
+                showRefresh: true,
+                clickToSelect: true,
+                idField: 'resourcesId',
+                selectItemName: 'btSelectItem',
+                columns: [
+                    {
+                        radio: true,
+                    }, {
+                        field: 'resourcesName',
+                        title: '权限'
+                    }, {
+                        field: 'resourcesCode',
+                        title: 'CODE'
+                    }, {
+                        field: 'resourcesStatusName',
+                        title: '状态'
+                    }
+                ],
+                onClickRow: function (item, $element) {
+                    return false;
                 }
-                ,{
-                    field: 'resourcesId',
-                    title: 'ID'
-                }
-                ,{
-                    field: 'resourcesUrl',
-                    title: 'URL'
-                }
-            ]
-        });
+            });
     }
 
+    //查询条件
     function queryParams(params) {
-        // return $.extend({}, {
-        //     offset: params.offset, //分页起始偏移
-        //     limit: params.limit //分页条数
-        // }, $('#form').getFormValues()); //form表单
-        return {};
+        return $.extend({}, {
+            offset: params.offset, //分页起始偏移
+            limit: params.limit //分页条数
+        }, $('#form').getFormValues()); //form表单
+    }
+
+    function add() {
+        var radioName = $('#table').bootstrapTable('getOptions').selectItemName;
+        var radioVal = $('input:radio[name="' + radioName + '"]:checked').val();
+        if (!radioVal) {
+            return;
+        }
+        console.log(radioVal);
     }
 
 </script>

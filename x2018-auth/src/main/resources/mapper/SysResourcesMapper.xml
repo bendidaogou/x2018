@@ -40,7 +40,7 @@
         from sys_resources
         <where>
             resources_status = 0
-            and resources_type=0
+            and resources_type in (0,2)
         </where>
         order by resources_seq asc
     </select>
