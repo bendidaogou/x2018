@@ -51,7 +51,6 @@
         <include refid="Base_Column_List"/>
         from sys_resources
         <where>
-            resources_status = 0
             and resources_type=1
             and resources_pid = #{resourcesPid}
         </where>

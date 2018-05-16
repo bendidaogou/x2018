@@ -83,6 +83,12 @@
             <artifactId>thymeleaf-extras-shiro</artifactId>
         </dependency>
 
+        <!-- commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
         <!-- x2018-auth -->
         <dependency>
             <groupId>com.laowen</groupId>

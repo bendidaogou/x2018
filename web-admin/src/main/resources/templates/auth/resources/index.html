@@ -36,20 +36,58 @@
 <div class="col-sm-9">
     <div id="toolbar">
 
-        <button id="btnPlus" class="btn btn-default" onclick="add()">
+        <button id="btnAdd" class="btn btn-default">
             <span class="glyphicon glyphicon-plus" aria-hidden="true">新增</span>
         </button>
-        <button id="btnPencil" class="btn btn-default">
+        <button id="btnEdit" class="btn btn-default">
             <span class="glyphicon glyphicon-pencil" aria-hidden="true">修改</span>
         </button>
-        <button id="btnRemove" class="btn btn-default">
+        <button id="btnDel" class="btn btn-default">
             <span class="glyphicon glyphicon-remove" aria-hidden="true">删除</span>
         </button>
     </div>
     <table id="table"></table>
 </div>
 
-<script>
+<!--  新增/修改 -->
+<div th:id="|dialog-${dialogId}|" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 th:id="|dialog-title-${dialogId}|" class="modal-title">
+                    操作
+                </h4>
+            </div>
+            <div th:id="'dialog-body-'+${dialogId}" class="modal-body">
+                <form th:id="|form-${dialogId}|" class="form-horizontal">
+                    <input type="hidden" id="resourcesId" name="resourcesId">
+                    <input type="hidden" id="resourcesPid" name="resourcesPid">
+                    <input type="hidden" id="resourcesType" name="resourcesType" value="1">
+                    <input type="hidden" id="resourcesStatus" name="resourcesStatus" value="0">
+                    <div class="form-group">
+                        <div class="col-sm-4" style="padding-top: 2px;">
+                            <input type="text" class="form-control" id="resourcesName" name="resourcesName" placeholder="权限名">
+                        </div>
+                        <div class="col-sm-4" style="padding-top: 2px;">
+                            <input type="text" class="form-control" id="resourcesCode" name="resourcesCode" placeholder="权限码">
+                        </div>
+                        <div class="col-sm-4" style="padding-top: 2px;">
+                            <input type="text" class="form-control" id="resourcesNote" name="resourcesNote" placeholder="备注">
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="btnSave">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
 
     var setting = {
         data: {
@@ -78,8 +116,11 @@
     //zTree点击事件
     function zTreeOnClick(event, treeId, treeNode) {
         if (0 == treeNode.type) {
+            $('#resourcesPid').val(treeNode.id);
             initTable(treeNode.id);
         } else {
+            $('#resourcesPid').val('');
+            $('#resourcesId').val('');
             $('#table').bootstrapTable('uncheckAll').bootstrapTable("removeAll");
             console.log('----所选非菜单……')
         }
@@ -117,9 +158,13 @@
                     }, {
                         field: 'resourcesStatusName',
                         title: '状态'
+                    }, {
+                        field: 'resourcesNote',
+                        title: '备注'
                     }
                 ],
                 onClickRow: function (item, $element) {
+                    $('#resourcesId').val(item.resourcesId);
                     return false;
                 }
             });
@@ -133,13 +178,86 @@
         }, $('#form').getFormValues()); //form表单
     }
 
-    function add() {
-        var radioName = $('#table').bootstrapTable('getOptions').selectItemName;
-        var radioVal = $('input:radio[name="' + radioName + '"]:checked').val();
-        if (!radioVal) {
-            return;
-        }
-        console.log(radioVal);
-    }
+</script>
 
+<script type="text/javascript">
+    $(function () {
+        //console.log('dialog-[[${dialogId}]]');
+        var dialog = $('#dialog-[[${dialogId}]]');
+
+        //新增
+       $('#btnAdd').on('click',function () {
+
+           var pid = $('#resourcesPid').val();
+           if('' == pid){
+               showMessageDialog('请选中菜单',1000);
+               return;
+           }
+           $('#dialog-title-[[${dialogId}]]').text('新增');
+           dialog.modal({backdrop: 'static', keyboard: true});
+       });
+
+        //修改
+        $('#btnEdit').on('click', function () {
+            var pid = $('#resourcesPid').val();
+            if('' == pid){
+                showMessageDialog('请选中菜单',1000);
+                return;
+            }
+
+            var radioName = $('#table').bootstrapTable('getOptions').selectItemName;
+            var radioVal = $('input:radio[name="' + radioName + '"]:checked').val();
+            if (!radioVal) {
+                showMessageDialog('请选要修改的项', 1000);
+                return;
+            }
+
+            var item = $('#table').bootstrapTable('getSelections')[0];
+            $('#resourcesName').val(item.resourcesName);
+            $('#resourcesCode').val(item.resourcesCode);
+            $('#resourcesNote').val(item.resourcesNote);
+
+            $('#dialog-title-[[${dialogId}]]').text('修改');
+            dialog.modal({backdrop: 'static', keyboard: true});
+
+        });
+
+        //删除
+        $('#btnDel').on('click', function () {
+            var pid = $('#resourcesPid').val();
+            if('' == pid){
+                showMessageDialog('请选中菜单',1000);
+                return;
+            }
+
+            var radioName = $('#table').bootstrapTable('getOptions').selectItemName;
+            var radioVal = $('input:radio[name="' + radioName + '"]:checked').val();
+            if (!radioVal) {
+                showMessageDialog('请选要修改的项', 1000);
+                return;
+            }
+            $.post('/sys/resources/perm/del', {resourcesId:radioVal}, function (res) {
+                if (res.successTag) {
+                    $('#table').bootstrapTable('refresh');
+                } else {
+                    showMessageDialog(res.msg, 1000);
+                }
+            }, 'json');
+
+        });
+
+        //保存
+        $('#btnSave').on('click', function () {
+            var form = $('#form-[[${dialogId}]]');
+            $.post('/sys/resources/perm/edit', form.getFormValues(), function (res) {
+                if (res.successTag) {
+                    dialog.modal('hide');
+                    $('#table').bootstrapTable('refresh');
+                } else {
+                    showMessageDialog(res.msg, 1000);
+                }
+            }, 'json');
+        });
+
+    });
 </script>

@@ -4,6 +4,7 @@ import com.laowen.auth.dao.SysResourcesMapper;
 import com.laowen.auth.domain.SysResources;
 import com.laowen.auth.service.SysResourcesService;
 import com.laowen.common.enums.DelStatusEnum;
+import com.laowen.common.utils.CommonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class SysResourcesServiceImpl implements SysResourcesService {
 
     @Override
     public int insertOne(SysResources sysResources) {
+        sysResources.setResourcesId(CommonUtil.getUUID());
         sysResources.setCreateTime(new Date());
         sysResources.setUpdateTime(new Date());
         return sysResourcesMapper.insertOne(sysResources);
