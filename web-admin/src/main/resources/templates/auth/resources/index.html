@@ -1,5 +1,9 @@
-<link rel="stylesheet" type="text/css" href="/libs/zTree/css/zTreeStyle/zTreeStyle.css">
-<script src="/libs/zTree/js/jquery.ztree.core.js"></script>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<link rel="stylesheet" type="text/css" th:href="@{/libs/zTree/css/zTreeStyle/zTreeStyle.css}">
+<script th:src="@{/libs/zTree/js/jquery.ztree.core.js}"></script>
 
 <!--<div class="panel-body">-->
     <!--<div class="panel panel-default">-->
@@ -49,6 +53,10 @@
     <table id="table"></table>
 </div>
 
+<div>
+
+</div>
+
 <!--  新增/修改 -->
 <div th:id="|dialog-${dialogId}|" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -86,6 +94,9 @@
         </div>
     </div>
 </div>
+
+</body>
+</html>
 
 <script type="text/javascript">
 

@@ -1,8 +1,14 @@
 package com.laowen.auth.domain;
 
+import com.laowen.auth.enums.ResourcesTypeEnum;
+import com.laowen.common.enums.DelStatusEnum;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 系统资源(菜单/操作)
@@ -78,5 +84,53 @@ public class SysResources {
      * update_user
      */
     private String updateUser;
+
+    /**
+     * 枚举状态[0:可用, 1:不可用]
+     */
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private String resourcesStatusName;
+
+    /**
+     * 枚举类型[0:菜单, 1:功能]
+     */
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
+    private String resourcesTypeName;
+
+    //region getter
+
+    /**
+     * 状态[0:可用, 1:不可用]
+     *
+     * @return
+     */
+    public String getResourcesStatusName() {
+        if (null == getResourcesStatus()) {
+            return null;
+        }
+        DelStatusEnum _enum = DelStatusEnum.getEnum(getResourcesStatus());
+        if (null != _enum) {
+            return _enum.getDesc();
+        }
+        return null;
+    }
+
+    /**
+     * 类型[0:菜单, 1:功能]
+     */
+    public String getResourcesTypeName() {
+        if (null == getResourcesType()) {
+            return null;
+        }
+        ResourcesTypeEnum _enum = ResourcesTypeEnum.getEnum(getResourcesType());
+        if (null != _enum) {
+            return _enum.getDesc();
+        }
+        return null;
+    }
+    //endregion
+
 
 }
